@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road To Berlin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Bers';
+}
+/* Struttura generale */
+body {
+  background-color: #2A403C;
+  color: #333;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: Bers;
+  font-size: 1.2rem;
+  overflow-y: auto; /* Riattiva lo scorrimento verticale */
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh
+  
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Nasconde la barra di scorrimento per browser basati su Webkit come Chrome e Safari */
+}
+
+/* Per permettere comunque lo scorrimento */
+.scroll-container {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; /* Disabilita lo scorrimento orizzontale */
+    scrollbar-width: none; /* Nasconde la barra di scorrimento per Firefox */
+    -ms-overflow-style: none; /* Nasconde la barra di scorrimento per Internet Explorer e Edge */
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none; /* Nasconde la barra di scorrimento per browser basati su Webkit come Chrome e Safari */
+}
+
+.black-line {
+    width: 100vw;
+    height: 7vh;
+    background-color: #001a0b;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1vw;
+    z-index: 1000;
+}
+
+.logo {
+    height: 5vh;
+    filter: invert(1);
+}
+
+body.menu-open .logo { display: none; }
+
+#nav-container {
+    margin-left: auto;
+    position: relative;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    background: #001a0b;
+    border-radius: 0;
+    position: relative;
+    bottom: 0;
+}
+.footer .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding: 60px;
+}
+
+.footer-row .footer-col h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.footer-col .links {
+  margin-top: 20px;
+}
+
+.footer-col .links li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.footer-col .links li a {
+  text-decoration: none;
+  color: #bfbfbf;
+}
+
+.footer-col .links li a:hover {
+  color: #fff;
+}
+
+.footer-col p {
+  margin: 20px 0;
+  color: #bfbfbf;
+  max-width: 300px;
+}
+
+.footer-col form {
+  display: flex;
+  gap: 5px;
+}
+
+.footer-col input {
+  height: 40px;
+  border-radius: 6px;
+  background: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid rgb(31, 22, 24); ;
+  caret-color: #fff;
+  color: #fff;
+  padding-left: 10px;
+}
+
+.footer-col input::placeholder {
+  color: #ccc;
+}
+
+ .footer-col form button {
+  background: #fff;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.footer-col form button:hover {
+  background: #cecccc;
+}
+
+.footer-col .icons {
+  display: flex;
+  margin-top: 30px;
+  gap: 30px;
+  cursor: pointer;
+}
+
+.footer-col .icons i {
+  color: #afb6c7;
+}
+
+.footer-col .icons i:hover  {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .footer .footer-row {
+    padding: 20px;
+    gap: 1rem;
+  }
+
+  .footer-col form {
+    display: block;
+  }
+
+  .footer-col form :where(input, button) {
+    width: 100%;
+  }
+
+  .footer-col form button {
+    margin: 10px 0 0 0;
+  }
+}
+
+.circle {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.6s, box-shadow 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+    margin: 20px 0;
+}
+
+.circle img, .circle .back {
+    backface-visibility: hidden;
+    position: absolute;
+}
+
+.circle img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.circle .back {
+    transform: rotateY(180deg);
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.flip img {
+    visibility: hidden;
+}
+
+.flip .back {
+    visibility: visible;
+}
+
+.flip {
+    transform: rotateY(180deg);
+}
+
+#circle1.flip {
+    box-shadow: 0 0 30px 15px rgba(255, 0, 0, 0.5); /* Ombra rossa */
+}
+
+#circle2.flip {
+    box-shadow: 0 0 30px 15px rgba(47, 255, 0, 0.886); /* Ombra verde */
+}
+
+h1 {
+    margin-bottom: 40px;
+    color: #ffffff;
+    font-size: 2.5em;
+    font-family: 'Times New Roman';
+}
+
+.led-effect-red {
+    animation: led-red 1s infinite alternate;
+}
+
+.led-effect-green {
+    animation: led-green 1s infinite alternate;
+}
+
+@keyframes led-red {
+    0% {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000, 0 0 25px #ff0000, 0 0 30px #ff0000, 0 0 35px #ff0000;
+    }
+    100% {
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 60px #ff0000, 0 0 70px #ff0000;
+    }
+}
+
+@keyframes led-green {
+    0% {
+        text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00, 0 0 25px #00ff00, 0 0 30px #00ff00, 0 0 35px #00ff00;
+    }
+    100% {
+        text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00, 0 0 60px #00ff00, 0 0 70px #00ff00;
+    }
+}
+
+/* Media query per dispositivi con larghezza massima di 768px */
+@media (max-width: 768px) {
+    .circle {
+        width: 300px;
+        height: 300px;
+    }
+
+    .circle .back {
+        font-size: 11px;  /* Ridotto il font-size */
+        padding: 15px;    /* Ridotto il padding */
+    }
+
+    h1 {
+        font-size: 1.7em;
+        margin-bottom: 20px;
+    }
+}
+
+/* Media query per dispositivi con larghezza massima di 480px */
+@media (max-width: 480px) {
+    .circle {
+        width: 150px;
+        height: 150px;
+    }
+
+    .circle .back {
+        font-size: 5px;  /* Ridotto il font-size ulteriormente */
+        padding: 5px;     /* Ridotto il padding ulteriormente */
+    }
+
+    h1 {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+}
+
+
+
+</style>
+</head>
+<body>
+  <div class="black-line">
+    <a href="index.html" id="logo-link">
+        <img src="LOGO.png" alt="Logo" class="logo">
+    </a    ></div>
+    <br><br>
+<center>
+  <br>
+  <h1 id="ampelmannchen">Ampelmännchen</h1>
+    <div id="circle1" class="circle">
+      <img src="istockphoto-511092401-612x612-removebg-preview.png" alt="Immagine">
+      <div class="back">Passeggiando per le strade di Berlino, non potrai non notare questi semafori particolari. Ampelmännchen è il loro nome, che tradotto sta a significare proprio "uomo del semaforo".<br><br> Inventato negli anni 
+        '60 dallo psicologo Karl Peglau, è stato progettato proprio per migliorare la sicurezza stradale. La sua figura distintiva infatti, era pensata per essere facilmente riconoscibile, soprattuto per le persone daltoniche.
+         </div>
+  </div>
+  <div id="circle2" class="circle">
+      <img src="CUsersvalerDesktopistockphoto-511092399-612x612-removebg-preview.png" alt="Immagine">
+      <div class="back">L'Ampelmännchen era presente sui semafori pedonali di Berlino Est.<br> <br>
+         Dopo la riunificazione della Germania, l'omino del semaforo è sopravvissuto come simbolo culturale, di identità e di ricordo della repubblica democratica tedesca (DDR). <br><br> il suo aspetto buffo e insolito spinge i pedoni a seguire le sue indicazioni.</div>
+  </div>
+</center>
+
+<br><br><br>
+<section class="footer">
+    <div class="footer-row">
+        <div class="footer-col">
+            <h4>Referenti Sito</h4>
+            <ul class="links">
+                <li><a href="mailto:valerio.esposito@itirighi.edu.it">Valerio Esposito</a></li>
+                <li><a href="mailto:alessandro.dellannunziata@itirighi.edu.it">Alessandro Dell'Annunziata</a></li>
+                <li><a href="mailto:federica.manzoni@itirighi.edu.it">Federica Manzoni</a></li>
+                <li><a href="mailto:rosario.muragas@itirighi.edu.it">Rosario Muragas</a></li>
+                <li><a href="mailto:luca.verazzo@itirighi.edu.it">Luca Verazzo</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Link Utili</h4>
+            <ul class="links">
+                <li><a href="https://www.itirighi.edu.it/">I.T.I Augusto Righi</a></li>
+                <li><a href="http://r-23.de/">Ristorante</a></li>
+                <li><a href="https://www.hotel-bb.com/de/hotel/berlin-tiergarten?utm_source=gmb&utm_medium=referral&utm_content=berlin&utm_campaign=yext">Hotel</a></li>
+                <li><a href="https://www.viveberlintours.com/it/tour-guidati-berlino-italiano/?gad_source=1&gclid=Cj0KCQiAlsy5BhDeARIsABRc6Ztabl1Ji38IAbbP-ypdgaUn31IjKfTudx0QKgPvOL2keDqqFYVMJc0aAnMVEALw_wcB">Tour</a></li>
+                <li><a href="https://www.bvg.de/en/connections/network-maps-and-routes">Trasporti</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col"></div>
+
+        <div class="footer-col">
+            <h4>Chi Siamo</h4>
+            <p>
+                Siamo entusiasti di presentarvi il nostro sito web per il viaggio d'istruzione a Berlino! Grazie alla passione e all'energia creativa di tutta la classe, questo sito è diventato un vero capolavoro di collaborazione.
+            </p>
+            <div class="icons">
+                <a href="https://www.twitch.tv/righiminutoperminuto"><i class="fa-brands fa-twitch"></i></a>
+                <a href="https://www.instagram.com/righireport/?igsh=MXE0YmlmMGw4bTV1Ng%3D%3D#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.style.overflowY = 'auto'; // Abilita lo scorrimento verticale
+        document.body.style.overflowX = 'hidden'; // Disabilita lo scorrimento orizzontale
+    });
+
+    const circle1 = document.getElementById('circle1');
+    const circle2 = document.getElementById('circle2');
+    const ampelmannchen = document.getElementById('ampelmannchen');
+
+    let currentlyFlipped = null;
+
+    function flipCircle(circle) {
+        if (currentlyFlipped === circle) {
+            circle.classList.remove('flip');
+            changeTextColor('white');
+            currentlyFlipped = null;
+        } else {
+            if (currentlyFlipped) {
+                currentlyFlipped.classList.remove('flip');
+                changeTextColor('white');
+            }
+            circle.classList.add('flip');
+            currentlyFlipped = circle;
+        }
+    }
+
+    function changeTextColor(color) {
+        ampelmannchen.style.color = color;
+        ampelmannchen.classList.remove('led-effect-red', 'led-effect-green');
+        if (color === 'red') {
+            ampelmannchen.classList.add('led-effect-red');
+        } else if (color === 'green') {
+            ampelmannchen.classList.add('led-effect-green');
+        }
+    }
+
+    circle1.addEventListener('click', () => {
+        flipCircle(circle1);
+        changeTextColor('red');
+    });
+
+    circle2.addEventListener('click', () => {
+        flipCircle(circle2);
+        changeTextColor('green');
+    });
+</script>
+</body>
+</html>

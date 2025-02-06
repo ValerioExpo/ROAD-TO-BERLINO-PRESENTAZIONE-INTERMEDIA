@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road To Berlin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'bers';
+}
+
+body {
+  background-color: #556e68;
+  color: #333;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: bers;
+  font-size: 1.2rem;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Nasconde la barra di scorrimento per browser basati su Webkit come Chrome e Safari */
+}
+
+/* Per permettere comunque lo scorrimento */
+.scroll-container {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden; /* Disabilita lo scorrimento orizzontale */
+    scrollbar-width: none; /* Nasconde la barra di scorrimento per Firefox */
+    -ms-overflow-style: none; /* Nasconde la barra di scorrimento per Internet Explorer e Edge */
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none; /* Nasconde la barra di scorrimento per browser basati su Webkit come Chrome e Safari */
+}
+
+
+.black-line {
+    width: 100vw;
+    height: 7vh;
+    background-color:#293535;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1vw;
+    z-index: 1000;
+}
+
+.logo {
+    height: 5vh;
+    filter: invert(1);
+}
+
+body.menu-open .logo { display: none; }
+
+#nav-container {
+    margin-left: auto;
+    position: relative;
+}
+
+#language-switcher {
+    display: flex;
+    gap: 10px;
+}
+
+.flag {
+    cursor: pointer;
+    width: 30px;
+    height: 20px;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  background: #293535;
+  border-radius: 0;
+  position: relative;
+  bottom: 0;
+}
+
+.footer .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding: 60px;
+}
+
+.footer-row .footer-col h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.footer-col .links {
+  margin-top: 20px;
+}
+
+.footer-col .links li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.footer-col .links li a {
+  text-decoration: none;
+  color: #bfbfbf;
+}
+
+.footer-col .links li a:hover {
+  color: #fff;
+}
+
+.footer-col p {
+  margin: 20px 0;
+  color: #bfbfbf;
+  max-width: 300px;
+}
+
+.footer-col form {
+  display: flex;
+  gap: 5px;
+}
+
+.footer-col input {
+  height: 40px;
+  border-radius: 6px;
+  background: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid rgb(31, 22, 24);
+  caret-color: #fff;
+  color: #fff;
+  padding-left: 10px;
+}
+
+.footer-col input::placeholder {
+  color: #ccc;
+}
+
+.footer-col form button {
+  background: #fff;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.footer-col form button:hover {
+  background: #cecccc;
+}
+
+.footer-col .icons {
+  display: flex;
+  margin-top: 30px;
+  gap: 30px;
+  cursor: pointer;
+}
+
+.footer-col .icons i {
+  color: #afb6c7;
+}
+
+.footer-col .icons i:hover {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .footer .footer-row {
+    padding: 20px;
+    gap: 1rem;
+  }
+
+  .footer-col form {
+    display: block;
+  }
+
+  .footer-col form :where(input, button) {
+    width: 100%;
+  }
+
+  .footer-col form button {
+    margin: 10px 0 0 0;
+  }
+}
+
+h1 {
+    margin: 20px;
+    font-size: 2rem;
+    color: #fff;
+}
+
+h1 {
+    margin: 2%;
+    font-size: 2vw; /* Utilizzo di unità relative */
+    color: #fff;
+}
+
+p {
+    margin: 2%;
+    font-size: 1.2vw; /* Utilizzo di unità relative */
+    line-height: 1.5;
+    color: #fff;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: nowrap; /* Imposta il contenuto per essere una riga orizzontale */
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 2%;
+}
+
+.text-section {
+    flex: 1; /* Fa sì che la sezione del testo occupi la maggior parte dello spazio */
+    margin-right: 2%;
+    margin-top: 20px; /* Aggiungi un margine superiore */
+}
+
+.side-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-self: flex-start; /* Allinea la colonna dalla parte superiore */
+}
+
+/* Assicura che il box audio e l'immagine stiano uno sotto l'altro con lo stesso spazio */
+.audio-container,
+.image-container {
+    width: 100%;
+    max-width: 600px; /* Limite massimo di larghezza */
+    margin: 20px auto; /* Spazio verticale e centratura orizzontale */
+}
+
+
+.audio-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+audio {
+    width: 100%;
+}
+
+.image-container {
+    text-align: center;
+    margin-top: 20px; /* Distanza tra il box audio e le immagini */
+}
+
+.image-container img {
+    width: 92%; /* Imposta la larghezza al 100% rispetto al contenitore */
+    max-width: 600px; /* Mantiene la larghezza massima uguale a quella del box audio */
+    height: auto; /* Mantiene il rapporto di aspetto */
+    border-radius: 12px; /* Aumenta o diminuisci il raggio del bordo arrotondato */
+    margin-bottom: 20px; /* Spazio tra le immagini */
+}
+
+.audio-container {
+    text-align: center;
+    width: 80%; /* Imposta la larghezza al 100% rispetto al contenitore */
+    max-width: 550px; /* Limite massimo di larghezza */
+    margin: 20px auto; /* Centratura orizzontale */
+    padding: 20px;
+    border: 1px solid #e5e6e1;
+    border-radius: 12px;
+    background-color: #e5e6e1;
+    box-sizing: border-box; /* Assicura che il padding e i bordi siano inclusi nella larghezza totale */
+    margin-top: 30px; /* Aggiungi margine superiore per spostarlo verso il basso */
+}
+
+.audio-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+audio {
+    width: 100%;
+}
+
+
+@media only screen and (max-width: 900px) {
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .text-section {
+        margin-right: 0; /* Rimuovi il margine destro per schermi piccoli */
+    }
+
+    .audio-container,
+    .image-container {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 5vw; /* Più grande su schermi medi */
+    }
+
+    p {
+        font-size: 3.5vw; /* Più grande su schermi medi */
+    }
+
+    .audio-container {
+        padding: 15px;
+    }
+
+    .audio-container h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .audio-container {
+        padding: 10px;
+    }
+
+    .audio-container h2 {
+        font-size: 1rem;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+  <div class="black-line">
+    <a href="index-Blog.html" id="logo-link">
+        <img src="LOGO.png" alt="Logo" class="logo">
+    </a>
+    <div id="language-switcher">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1200px-Flag_of_Italy.svg.png" alt="Italiano" class="flag" id="flag-it">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg" alt="English" class="flag" id="flag-en">
+    </div>
+  </div>
+
+<br><br>
+
+<div class="content-wrapper">
+  <div class="text-section">
+    <p class="it">
+      Il palazzo del Reichstag ha vissuto numerosi eventi storici. Ad esempio, dopo la seconda guerra mondiale, il Reichstag si trovava vicino al confine tra Berlino Est e Berlino Ovest. Con la costruzione del Muro di Berlino nel 1961, il Reichstag rimase in una sorta di limbo, inutilizzato e quasi dimenticato.
+      Una curiosità interessante è che, durante la Guerra Fredda, il palazzo del Reichstag fu occasionalmente utilizzato per eventi simbolici. Nel 1961, ad esempio, fu il punto d'incontro per una manifestazione di solidarietà con Berlino Ovest. Nel 1988, un anno prima della caduta del Muro, il palazzo ospitò una grande mostra sulla storia tedesca.<br><br>
+      Un altro evento simbolico si verificò nel 1995, quando l'artista Christo e sua moglie Jeanne-Claude "impacchettarono" il Reichstag. Questo progetto artistico, conosciuto come "Wrapped Reichstag", durò per due settimane e attirò milioni di visitatori. Il Reichstag fu avvolto in un tessuto argentato, trasformando temporaneamente il suo aspetto e invitando il pubblico a riflettere sulla storia dell'edificio.
+      Il palazzo del Reichstag è visitato da milioni di turisti ogni anno ed è una delle attrazioni più visitate di Berlino. La visita alla cupola di vetro è particolarmente popolare, permettendo ai visitatori di ammirare una vista spettacolare della città, nonché di osservare i lavori del parlamento sottostante.
+      La storia del Reichstag non è priva di controversie.<br><br> Dopo l'incendio del 1933, Adolf Hitler usò l'evento come pretesto per promuovere il Decreto dell'incendio del Reichstag, che sospese molte delle libertà civili garantite dalla costituzione di Weimar, contribuendo all'instaurazione della dittatura nazista.
+      Inoltre, la parola "Reichstag" stessa deriva dall'antico alto tedesco "rīhhi" (regno) e "stag" (assemblea), quindi l'assemblea del regno. Questo riflette il ruolo del palazzo come centro del potere politico nell'epoca imperiale tedesca.
+      Oggi, il Reichstag non è solo un simbolo della storia tedesca, ma anche un potente emblema della democrazia e della trasparenza politica. La sua cupola in vetro rappresenta la possibilità per i cittadini di osservare i lavori del governo, promuovendo un senso di partecipazione e coinvolgimento civico.
+          </p>
+          <p class="en" style="display:none;">
+            The Reichstag building is a structure in Berlin that was built to host the Imperial Diet of the German Empire, also known as the Second Reich, which lasted from 1871 to 1918. It was inaugurated in 1894 and remained in operation until 1933, the year when it was set on fire by the Dutchman Marinus van der Lubbe, who was later tried and sentenced to death.
+            Apart from some interventions to prevent its collapse, the building was never restored until the reunification of Germany in 1990, when architect Norman Foster directed the recovery works, which were completed in 1999. The Reichstag is now the seat of the German federal parliament, the Bundestag.
+            A distinctive feature of the Reichstag building is its magnificent glass dome, constructed on the roof of the building and also designed by Norman Foster. The dome is accessible to the public and offers a panoramic view of the city of Berlin. It symbolizes the transparency of democracy, allowing visitors to see the interior of the parliamentary chamber below.
+            The Reichstag building has witnessed numerous historical events. For example, after World War II, the Reichstag was located near the border between East and West Berlin. With the construction of the Berlin Wall in 1961, the Reichstag remained in a sort of limbo, unused and almost forgotten.
+            An interesting curiosity is that, during the Cold War, the Reichstag building was occasionally used for symbolic events. In 1961, for instance, it was the meeting point for a solidarity demonstration with West Berlin. In 1988, a year before the fall of the Wall, the building hosted a large exhibition on German history.<br><br>
+            Another symbolic event occurred in 1995 when artist Christo and his wife Jeanne-Claude "wrapped" the Reichstag. This artistic project, known as "Wrapped Reichstag," lasted for two weeks and attracted millions of visitors. The Reichstag was enveloped in a silvery fabric, temporarily transforming its appearance and inviting the public to reflect on the building's history.
+            The Reichstag is visited by millions of tourists every year and is one of Berlin's most visited attractions. The visit to the glass dome is particularly popular, allowing visitors to admire a spectacular view of the city as well as observe the workings of the parliament below.
+            The history of the Reichstag is not without controversy.<br><br> After the 1933 fire, Adolf Hitler used the event as a pretext to promote the Reichstag Fire Decree, which suspended many civil liberties guaranteed by the Weimar Constitution, contributing to the establishment of the Nazi dictatorship.
+            Furthermore, the word "Reichstag" itself derives from the Old High German "rīhhi" (kingdom) and "stag" (assembly), thus meaning the assembly of the kingdom. This reflects the building's role as a center of political power during the German imperial era.
+            Today, the Reichstag is not only a symbol of German history but also a powerful emblem of democracy and political transparency. Its glass dome represents the possibility for citizens to observe the workings of the government, promoting a sense of civic participation and engagement.
+          </p>
+  </div>
+  <div class="side-section">
+      <div class="audio-container">
+          <h2 class="it">Museo Ebraico - Italiano</h2>
+          <h2 class="en" style="display: none;">Jewish Museum - English</h2>
+          <audio id="audio-player" controls>
+              <source id="audio-source-it" src="WhatsApp Audio 2025-01-22 at 11.00.04.mpeg" type="audio/mp3">
+              <source id="audio-source-en" src="WhatsApp Audio 2025-01-22 at 11.00.05.mpeg" type="audio/mp3" style="display: none;">
+          </audio>
+      </div>
+      <div class="image-container">
+          <img src="ebraico2.png" alt="Descrizione Immagine">
+          <img src="ebraico3.jpg" alt="Descrizione Immagine">
+      </div>
+  </div>
+</div>
+
+
+</div>
+  <br><br><br>
+  <section class="footer">
+    <div class="footer-row">
+      <div class="footer-col">
+        <h4 class="it">Referenti Sito</h4>
+        <h4 class="en" style="display:none;">Site Contacts</h4>
+        <ul class="links">
+          <li class="it"><a href="mailto:valerio.esposito@itirighi.edu.it">Valerio Esposito</a></li>
+          <li class="en" style="display:none;"><a href="mailto:valerio.esposito@itirighi.edu.it">Valerio Esposito</a></li>
+          <li class="it"><a href="mailto:alessandro.dellannunziata@itirighi.edu.it">Alessandro Dell'Annunziata</a></li>
+          <li class="en" style="display:none;"><a href="mailto:alessandro.dellannunziata@itirighi.edu.it">Alessandro Dell'Annunziata</a></li>
+          <li class="it"><a href="mailto:federica.manzoni@itirighi.edu.it">Federica Manzoni</a></li>
+          <li class="en" style="display:none;"><a href="mailto:federica.manzoni@itirighi.edu.it">Federica Manzoni</a></li>
+          <li class="it"><a href="mailto:rosario.muragas@itirighi.edu.it">Rosario Muragas</a></li>
+          <li class="en" style="display:none;"><a href="mailto:rosario.muragas@itirighi.edu.it">Rosario Muragas</a></li>
+          <li class="it"><a href="mailto:luca.verazzo@itirighi.edu.it">Luca Verazzo</a></li>
+          <li class="en" style="display:none;"><a href="mailto:luca.verazzo@itirighi.edu.it">Luca Verazzo</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-col">
+        <h4 class="it">Link Utili</h4>
+        <h4 class="en" style="display:none;">Useful Links</h4>
+        <ul class="links">
+          <li class="it"><a href="https://www.itirighi.edu.it/">I.T.I Augusto Righi</a></li>
+          <li class="en" style="display:none;"><a href="https://www.itirighi.edu.it/">I.T.I Augusto Righi</a></li>
+          <li class="it"><a href="http://r-23.de/">Ristorante</a></li>
+          <li class="en" style="display:none;"><a href="http://r-23.de/">Restaurant</a></li>
+          <li class="it"><a href="https://www.hotel-bb.com/de/hotel/berlin-tiergarten?utm_source=gmb&utm_medium=referral&utm_content=berlin&utm_campaign=yext">Hotel</a></li>
+          <li class="en" style="display:none;"><a href="https://www.hotel-bb.com/de/hotel/berlin-tiergarten?utm_source=gmb&utm_medium=referral&utm_content=berlin&utm_campaign=yext">Hotel</a></li>
+          <li class="it"><a href="https://www.viveberlintours.com/it/tour-guidati-berlino-italiano/?gad_source=1&gclid=Cj0KCQiAlsy5BhDeARIsABRc6Ztabl1Ji38IAbbP-ypdgaUn31IjKfTudx0QKgPvOL2keDqqFYVMJc0aAnMVEALw_wcB">Tour</a></li>
+          <li class="en" style="display:none;"><a href="https://www.viveberlintours.com/it/tour-guidati-berlino-italiano/?gad_source=1&gclid=Cj0KCQiAlsy5BhDeARIsABRc6Ztabl1Ji38IAbbP-ypdgaUn31IjKfTudx0QKgPvOL2keDqqFYVMJc0aAnMVEALw_wcB">Tour</a></li>
+          <li class="it"><a href="https://www.bvg.de/en/connections/network-maps-and-routes">Trasporti</a></li>
+          <li class="en" style="display:none;"><a href="https://www.bvg.de/en/connections/network-maps-and-routes">Transport</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-col">
+        <h4 class="it">Chi Siamo</h4>
+        <h4 class="en" style="display:none;">About Us</h4>
+        <p class="it">
+          Siamo entusiasti di presentarvi il nostro sito web per il viaggio d'istruzione a Berlino! Grazie alla passione e all'energia creativa di tutta la classe, questo sito è diventato un vero capolavoro di collaborazione.
+        </p>
+        <p class="en" style="display:none;">
+          We are excited to present our website for the educational trip to Berlin! Thanks to the passion and creative energy of the entire class, this site has become a true masterpiece of collaboration.
+        </p>
+        
+        <div class="icons">
+            <a href="https://www.twitch.tv/righiminutoperminuto"> <i class="fa-brands fa-twitch"></i></a>
+            <a href="https://www.instagram.com/righireport/?igsh=MXE0YmlmMGw4bTV1Ng%3D%3D#"> <i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.style.overflowY = 'auto'; // Abilita lo scorrimento verticale
+        document.body.style.overflowX = 'hidden'; // Disabilita lo scorrimento orizzontale
+        
+        // Switch languages when flags are clicked
+        document.getElementById('flag-it').addEventListener('click', function() {
+            // Switch to Italian
+            document.querySelectorAll('.it').forEach(function(element) {
+                element.style.display = 'block';
+            });
+            document.querySelectorAll('.en').forEach(function(element) {
+                element.style.display = 'none';
+            });
+        });
+
+        document.getElementById('flag-en').addEventListener('click', function() {
+            // Switch to English
+            document.querySelectorAll('.en').forEach(function(element) {
+                element.style.display = 'block';
+            });
+            document.querySelectorAll('.it').forEach(function(element) {
+                element.style.display = 'none';
+            });
+        });
+    });
+
+    document.getElementById('flag-it').addEventListener('click', function() {
+    // Cambia alla lingua italiana
+    document.querySelectorAll('.it').forEach(function(element) {
+        element.style.display = 'block';
+    });
+    document.querySelectorAll('.en').forEach(function(element) {
+        element.style.display = 'none';
+    });
+
+    const audioPlayer = document.getElementById('audio-player');
+    const italianSource = document.getElementById('audio-source-it');
+    audioPlayer.src = italianSource.src;
+    audioPlayer.load();
+    audioPlayer.play();
+});
+
+document.getElementById('flag-en').addEventListener('click', function() {
+    // Cambia alla lingua inglese
+    document.querySelectorAll('.en').forEach(function(element) {
+        element.style.display = 'block';
+    });
+    document.querySelectorAll('.it').forEach(function(element) {
+        element.style.display = 'none';
+    });
+
+    const audioPlayer = document.getElementById('audio-player');
+    const englishSource = document.getElementById('audio-source-en');
+    audioPlayer.src = englishSource.src;
+    audioPlayer.load();
+    audioPlayer.play();
+});
+
+
+</script>
+</body>
+</html>
